@@ -100,7 +100,9 @@ pairwise_comparison <- function(scores,
   }
 
   # identify unit of single observation.
-  forecast_unit <- get_forecast_unit(scores)
+  if(!arg_present_in_dots("forecast_unit", ...)) {
+    forecast_unit <- get_forecast_unit(scores)
+  }
 
   # if by is equal to forecast_unit, then pairwise comparisons don't make sense
   if (setequal(by, forecast_unit)) {
@@ -284,6 +286,8 @@ pairwise_comparison_one_group <- function(scores,
 #' determine p-values.
 #' @param n_permutations numeric, the number of permutations for a
 #' permutation test. Default is 999.
+#' @param forecast_unit A character vector with the columns that identify the
+#' unit of a single forecast
 #' @author Johannes Bracher, \email{johannes.bracher@@kit.edu}
 #' @author Nikos Bosse \email{nikosbosse@@gmail.com}
 #' @keywords internal
@@ -294,10 +298,13 @@ compare_two_models <- function(scores,
                                metric,
                                one_sided = FALSE,
                                test_type = c("non_parametric", "permutation"),
-                               n_permutations = 999) {
+                               n_permutations = 999,
+                               forecast_unit) {
   scores <- data.table::as.data.table(scores)
 
-  forecast_unit <- get_forecast_unit(scores)
+  if(!arg_present_in_dots("forecast_unit", ...)) {
+    forecast_unit <- get_forecast_unit(scores)
+  }
 
   if (!("model" %in% names(scores))) {
     stop("pairwise comparisons require a column called 'model'")

@@ -102,10 +102,15 @@ score <- function(data,
 
   # preparations ---------------------------------------------------------------
   check_data <- check_forecasts(data)
-
   data <- check_data$cleaned_data
   prediction_type <- check_data$prediction_type
-  forecast_unit <- check_data$forecast_unit
+
+  if(!check_arg_in_dots("forecast_unit", ...)) {
+    forecast_unit <- check_data$forecast_unit
+  } else {
+    # need to remove forecast_unit from the ... arguments in order to
+    # avoid a downstream error.
+  }
   target_type <- check_data$target_type
 
   # check metrics are available or set to all metrics --------------------------

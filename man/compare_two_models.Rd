@@ -11,7 +11,8 @@ compare_two_models(
   metric,
   one_sided = FALSE,
   test_type = c("non_parametric", "permutation"),
-  n_permutations = 999
+  n_permutations = 999,
+  forecast_unit
 )
 }
 \arguments{
@@ -36,6 +37,9 @@ determine p-values.}
 
 \item{n_permutations}{numeric, the number of permutations for a
 permutation test. Default is 999.}
+
+\item{forecast_unit}{A character vector with the columns that identify the
+unit of a single forecast}
 }
 \description{
 This function compares two models based on the subset of forecasts for which

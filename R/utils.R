@@ -256,3 +256,20 @@ get_forecast_unit <- function(data, prediction_type) {
   forecast_unit <- setdiff(colnames(data), protected_columns)
   return(forecast_unit)
 }
+
+
+#' @title Check if an argument is passed in to (...)
+#'
+#' @description Helper function that checks whether an argument was passed to
+#' (...) in a function call.
+#'
+#' @param argname the name of the argument to check
+#'
+#' @return TRUE or FALSE
+#'
+#' @keywords internal
+arg_present_in_dots <- function(argname, ...) {
+  function_call <- as.list(match.call(expand.dots=TRUE))
+  is_present <- (argname %in% names(function_call))
+  return(is_present)
+}

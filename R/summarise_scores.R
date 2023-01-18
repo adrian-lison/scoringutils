@@ -1,6 +1,6 @@
 #' @title Summarise scores as produced by [score()]
 #'
-#' @description Summarise scores as produced by [score()]-
+#' @description Summarise scores as produced by [score()]
 #'
 #' @inheritParams pairwise_comparison
 #' @inheritParams score
@@ -87,7 +87,11 @@ summarise_scores <- function(scores,
   # preparations ---------------------------------------------------------------
   # get unit of a single forecast
   prediction_type <- get_prediction_type(scores)
-  forecast_unit <- get_forecast_unit(scores, prediction_type = prediction_type)
+
+
+  if(!arg_present_in_dots("forecast_unit", ...)) {
+    forecast_unit <- get_forecast_unit(scores, prediction_type = prediction_type)
+  }
 
   # if by is not provided, set to the unit of a single forecast
   if (is.null(by)) {
