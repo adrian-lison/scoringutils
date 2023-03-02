@@ -256,3 +256,53 @@ get_forecast_unit <- function(data, prediction_type) {
   forecast_unit <- setdiff(colnames(data), protected_columns)
   return(forecast_unit)
 }
+
+
+
+#' @title Check type of an input
+#'
+#' @description Helper function to check the type of an input
+#'
+#' @param input an input or list of inputs to be checked
+#' @param allowed_types
+#'
+#' @return TRUE or FALSE
+#'
+#' @keywords internal
+
+check_type <- function(input, allowed_types) {
+  check <- list()
+
+  if ("numeric" %in% allowed_types) {
+    check[["numeric"]] <- sapply(input, is.numeric)
+  }
+
+  if ("logical" %in% allowed_types) {
+    # note that NA is logical
+    check[["logical"]] <- sapply(input, is.logical)
+  }
+
+  check <- (check$numeric | check$logical)
+
+  if (all(check)) {
+    return(TRUE)
+  } else {
+    stop(
+      paste0(
+        "input is not of expected type"
+      )
+    )
+  }
+}
+
+
+input <- list(c("h", "b"),
+              c(NA, NA),
+              c(TRUE, FALSE),
+              pillar::num(c(4)))
+
+
+
+
+
+
